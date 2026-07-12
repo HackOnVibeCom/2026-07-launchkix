@@ -1,0 +1,109 @@
+/* Nav — site navigation with optional sticky + glass */
+
+.nav {
+  position: relative;
+  width: 100%;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface-0);
+  z-index: var(--z-sticky);
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+}
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-md)) saturate(1.2);
+  -webkit-backdrop-filter: blur(var(--blur-md)) saturate(1.2);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background: var(--surface-1);
+  }
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 72px;
+  gap: var(--space-4);
+}
+
+/* ── Logo ── */
+
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: opacity var(--dur-2) var(--ease-out-quart);
+}
+
+.logo:hover {
+  opacity: 0.8;
+}
+
+.logoText {
+  font-family: var(--font-display);
+  font-size: var(--fs-step-1);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  letter-spacing: var(--tracking-tight);
+}
+
+.logoAccent {
+  color: var(--accent);
+}
+
+/* ── Links ── */
+
+.links {
+  display: none;
+  gap: var(--space-2);
+}
+
+@media (min-width: 768px) {
+  .links {
+    display: flex;
+  }
+}
+
+.link {
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--fs-step-0);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: color var(--dur-2) var(--ease-out-quart),
+    background-color var(--dur-2) var(--ease-out-quart);
+}
+
+.link:hover {
+  color: var(--text-primary);
+  background: var(--surface-2);
+}
+
+/* ── Actions ── */
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.ctaButton {
+  text-decoration: none;
+}
+
+/* Mobile: hide "Get Started" text, keep icon if we add one later */
+@media (max-width: 640px) {
+  .actions button {
+    padding-left: var(--space-3);
+    padding-right: var(--space-3);
+  }
+}
