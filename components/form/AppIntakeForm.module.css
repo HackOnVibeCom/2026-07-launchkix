@@ -1,0 +1,202 @@
+/* AppIntakeForm — glass card form following Noviq tokens */
+
+.form {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* ── Header ── */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--fs-step-2);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--lh-tight);
+}
+
+.subtitle {
+  font-size: var(--fs-step-0);
+  color: var(--text-muted);
+  line-height: var(--lh-normal);
+}
+
+/* ── Field stack ── */
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.fieldLabel {
+  font-family: var(--font-sans);
+  font-size: var(--fs-step-0);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  line-height: var(--lh-snug);
+}
+
+.required {
+  color: var(--danger);
+  margin-left: var(--space-1);
+}
+
+.errorText {
+  font-size: var(--fs-step--1);
+  color: var(--danger);
+  margin: 0;
+}
+
+/* ── Platform toggle ── */
+
+.platformRow {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.platformBtn {
+  flex: 1;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--fs-step-0);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--dur-2) var(--ease-out-quart),
+    border-color var(--dur-2) var(--ease-out-quart),
+    color var(--dur-2) var(--ease-out-quart);
+}
+
+.platformBtn:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.platformBtnActive {
+  background: var(--accent-muted);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── Tone grid ── */
+
+.toneGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+.toneBtn {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3);
+  font-family: var(--font-sans);
+  text-align: left;
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--dur-2) var(--ease-out-quart),
+    border-color var(--dur-2) var(--ease-out-quart);
+}
+
+.toneBtn:hover {
+  border-color: var(--border-strong);
+}
+
+.toneBtnActive {
+  background: var(--accent-muted);
+  border-color: var(--accent);
+}
+
+.toneBtnLabel {
+  font-size: var(--fs-step-0);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  line-height: var(--lh-snug);
+}
+
+.toneBtnDesc {
+  font-size: var(--fs-step--1);
+  color: var(--text-muted);
+  line-height: var(--lh-snug);
+}
+
+.toneBtnActive .toneBtnLabel {
+  color: var(--accent);
+}
+
+/* ── Goal row ── */
+
+.goalRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.goalBtn {
+  min-height: 44px;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-sans);
+  font-size: var(--fs-step-0);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-align: left;
+  transition: background-color var(--dur-2) var(--ease-out-quart),
+    border-color var(--dur-2) var(--ease-out-quart),
+    color var(--dur-2) var(--ease-out-quart);
+}
+
+.goalBtn:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.goalBtnActive {
+  background: var(--accent-muted);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── Footer ── */
+
+.trustRow {
+  display: flex;
+}
+
+.submitBtn {
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .platformBtn,
+  .toneBtn,
+  .goalBtn {
+    transition-duration: 0.01ms;
+  }
+}

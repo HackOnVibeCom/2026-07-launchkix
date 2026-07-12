@@ -1,0 +1,257 @@
+/* KitResult — Radix Tabs + section panels */
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* ── Tab list ── */
+
+.tabList {
+  display: flex;
+  gap: var(--space-1);
+  overflow-x: auto;
+  padding-bottom: var(--space-1);
+  border-bottom: 1px solid var(--border-subtle);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.tabList::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  flex-shrink: 0;
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--fs-step--1);
+  font-weight: var(--weight-medium);
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--dur-2) var(--ease-out-quart),
+    background-color var(--dur-2) var(--ease-out-quart);
+  position: relative;
+}
+
+.tab:hover {
+  color: var(--text-primary);
+  background: var(--surface-2);
+}
+
+.tab[data-state="active"] {
+  color: var(--accent);
+  background: var(--accent-muted);
+}
+
+/* ── Panels ── */
+
+.panels {
+  min-height: 360px;
+}
+
+/* ── Section body layout ── */
+
+.sectionBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.fieldRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+@media (max-width: 640px) {
+  .fieldRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fieldItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.fieldKey {
+  font-size: var(--fs-step--1);
+  font-weight: var(--weight-semibold);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  font-family: var(--font-sans);
+}
+
+.fieldVal {
+  font-size: var(--fs-step-0);
+  color: var(--text-primary);
+  font-weight: var(--weight-medium);
+  font-family: var(--font-sans);
+  line-height: var(--lh-snug);
+}
+
+.charCount {
+  font-size: var(--fs-step--1);
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.body {
+  font-size: var(--fs-step-0);
+  color: var(--text-secondary);
+  line-height: var(--lh-normal);
+  white-space: pre-wrap;
+  margin: 0;
+}
+
+/* ── ASO tag cloud ── */
+
+.tagCloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.tipList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-left: var(--space-5);
+  margin: 0;
+}
+
+.tipList li {
+  font-size: var(--fs-step-0);
+  color: var(--text-secondary);
+  line-height: var(--lh-normal);
+}
+
+/* ── Social grid ── */
+
+.socialGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.socialPost {
+  padding: var(--space-4);
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.socialHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.socialDay {
+  font-size: var(--fs-step--1);
+  font-weight: var(--weight-semibold);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.socialHook {
+  font-size: var(--fs-step-0);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  line-height: var(--lh-snug);
+  margin: 0;
+}
+
+.socialCta {
+  display: flex;
+  gap: var(--space-2);
+  font-size: var(--fs-step--1);
+  color: var(--text-muted);
+}
+
+/* ── Email ── */
+
+.subjectList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-left: var(--space-5);
+  margin: 0;
+}
+
+.subjectItem {
+  font-size: var(--fs-step-0);
+  color: var(--text-primary);
+  line-height: var(--lh-normal);
+}
+
+/* ── Community ── */
+
+.communityTitle {
+  font-size: var(--fs-step-1);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  line-height: var(--lh-snug);
+  margin: 0;
+}
+
+/* ── Footer ── */
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.footerMeta {
+  font-size: var(--fs-step--1);
+  color: var(--text-faint);
+  font-family: var(--font-sans);
+}
+
+.copyAllBtn {
+  font-family: var(--font-sans);
+  font-size: var(--fs-step--1);
+  font-weight: var(--weight-medium);
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+  transition: background-color var(--dur-2) var(--ease-out-quart);
+}
+
+.copyAllBtn:hover {
+  background: var(--accent-muted);
+}
+
+/* ── Skeleton state ── */
+
+.skeletonCard {
+  padding: var(--space-5);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--card-radius);
+  background: var(--card-bg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
