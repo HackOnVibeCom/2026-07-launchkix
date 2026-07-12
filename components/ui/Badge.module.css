@@ -1,0 +1,65 @@
+/* Badge — Tier 3 tokens only, private vars for variants */
+
+.badge {
+  /* Base: use semantic tokens */
+  --_bg: var(--surface-2);
+  --_fg: var(--text-secondary);
+  --_border: var(--border-subtle);
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  white-space: nowrap;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--_border);
+  background: var(--_bg);
+  color: var(--_fg);
+  user-select: none;
+}
+
+/* ── Variants ── */
+
+.default {
+  --_bg: var(--surface-2);
+  --_fg: var(--text-secondary);
+  --_border: var(--border-subtle);
+}
+
+.accent {
+  --_bg: var(--accent-muted);
+  --_fg: var(--accent);
+  --_border: var(--accent-muted);
+}
+
+.success {
+  --_bg: var(--success-muted);
+  --_fg: var(--success);
+  --_border: var(--success-muted);
+}
+
+.warning {
+  --_bg: var(--warning-muted);
+  --_fg: var(--warning);
+  --_border: var(--warning-muted);
+}
+
+.danger {
+  --_bg: var(--danger-muted);
+  --_fg: var(--danger);
+  --_border: var(--danger-muted);
+}
+
+/* ── Sizes ── */
+
+.sm {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--fs-step--1);
+}
+
+.md {
+  padding: calc(var(--space-1) + 1px) var(--space-3);
+  font-size: var(--fs-step-0);
+}
