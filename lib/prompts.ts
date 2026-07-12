@@ -116,14 +116,6 @@ IMPORTANT:
 - Keep store titles under limits (this is critical for ASO)
 - Be specific to "${brief.name}" - avoid generic phrases
 - INCLUDE both landingPage and pressBlurb sections in your response`;
-
-IMPORTANT:
-- Make the 7-day social calendar diverse: mix platforms, angles (benefits, behind-scenes, social proof, urgency, tips)
-- All content must sound ${brief.tone}
-- Focus on the goal: ${brief.goal}
-- Speak directly to: ${brief.targetAudience}
-- Keep store titles under limits (this is critical for ASO)
-- Be specific to "${brief.name}" - avoid generic phrases`;
 }
 
 /**

@@ -438,7 +438,12 @@ export function KitResult({ kit, brief, onRegenerate }: KitResultProps) {
     >
       {/* Tab list */}
       <Tabs.List className={styles.tabList} aria-label="Launch kit sections">
-        {TABS.map((tab) => (
+        {TABS.filter((tab) => {
+          // Only show optional tabs if data exists
+          if (tab.value === "landingPage" && !kit.landingPage) return false;
+          if (tab.value === "pressBlurb" && !kit.pressBlurb) return false;
+          return true;
+        }).map((tab) => (
           <Tabs.Trigger key={tab.value} value={tab.value} className={styles.tab}>
             {tab.label}
           </Tabs.Trigger>

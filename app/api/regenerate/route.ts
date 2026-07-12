@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getOpenRouterClient } from "@/lib/openrouter";
-import { SYSTEM_PROMPT, buildSectionPrompt } from "@/lib/prompts";
+import { 
+  SYSTEM_PROMPT, 
+  buildSectionPrompt,
+  buildLandingPagePrompt,
+  buildPressBlurbPrompt
+} from "@/lib/prompts";
 import { AppBriefSchema, extractJSON, formatZodIssues } from "@/lib/schema";
 import {
   AppStoreListingSchema,
@@ -10,6 +15,8 @@ import {
   SocialPostSchema,
   LaunchEmailSchema,
   CommunityPostSchema,
+  LandingPageCopySchema,
+  PressBlurbSchema,
 } from "@/lib/schema";
 
 /** All regeneratable section keys and their schemas */
@@ -20,6 +27,8 @@ const SECTION_SCHEMAS = {
   socialCalendar: z.array(SocialPostSchema).length(7),
   email: LaunchEmailSchema,
   communityPost: CommunityPostSchema,
+  landingPage: LandingPageCopySchema,
+  pressBlurb: PressBlurbSchema,
 } as const;
 
 export type RegeneratableSection = keyof typeof SECTION_SCHEMAS;
@@ -33,6 +42,8 @@ const RegenerateBodySchema = z.object({
     "socialCalendar",
     "email",
     "communityPost",
+    "landingPage",
+    "pressBlurb",
   ]),
 });
 
@@ -72,10 +83,24 @@ export async function POST(req: NextRequest) {
 
   try {
     const client = getOpenRouterClient();
+    
+    // Build appropriate prompt based on section type
+    let userPrompt: string;
+    if (section === "landingPage") {
+      userPrompt = buildLandingPagePrompt(brief);
+    } else if (section === "pressBlurb") {
+      userPrompt = buildPressBlurbPrompt(brief);
+    } else {
+      userPrompt = buildSectionPrompt(brief, section as keyof Omit<
+        import("@/types/kit").LaunchKit,
+        "landingPage" | "pressBlurb" | "variants"
+      >);
+    }
+
     const response = await client.chatCompletion({
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
-        { role: "user", content: buildSectionPrompt(brief, section) },
+        { role: "user", content: userPrompt },
       ],
       temperature: 0.75, // slightly higher for creative variation
       maxTokens: 2000,

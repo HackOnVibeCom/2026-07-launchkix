@@ -244,6 +244,29 @@
   background: var(--accent-muted);
 }
 
+.exportJsonBtn {
+  font-family: var(--font-sans);
+  font-size: var(--fs-step--1);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+  transition: background-color var(--dur-2) var(--ease-out-quart),
+    color var(--dur-2) var(--ease-out-quart);
+}
+
+.exportJsonBtn:hover {
+  background: var(--surface-3);
+  color: var(--text-primary);
+}
+
+.exportJsonBtn:active {
+  transform: scale(0.97);
+}
+
 /* ── Skeleton state ── */
 
 .skeletonCard {
