@@ -95,8 +95,27 @@ OUTPUT SCHEMA (respond with ONLY this JSON, no markdown fences):
   "communityPost": {
     "title": "string (Reddit/PH style: honest, intriguing)",
     "body": "string (authentic launch story, problem → solution → ask)"
+  },
+  "landingPage": {
+    "hero": "string (compelling headline, 6-12 words)",
+    "subhead": "string (benefit-focused subheadline, 1-2 sentences)",
+    "features": ["3 key feature strings with benefit statements"],
+    "cta": "string (action-oriented CTA text)"
+  },
+  "pressBlurb": {
+    "summary": "string (100-word press summary, newswire style)",
+    "founderQuote": "string (1-2 sentence founder quote template with [Founder Name] placeholder)"
   }
 }
+
+IMPORTANT:
+- Make the 7-day social calendar diverse: mix platforms, angles (benefits, behind-scenes, social proof, urgency, tips)
+- All content must sound ${brief.tone}
+- Focus on the goal: ${brief.goal}
+- Speak directly to: ${brief.targetAudience}
+- Keep store titles under limits (this is critical for ASO)
+- Be specific to "${brief.name}" - avoid generic phrases
+- INCLUDE both landingPage and pressBlurb sections in your response`;
 
 IMPORTANT:
 - Make the 7-day social calendar diverse: mix platforms, angles (benefits, behind-scenes, social proof, urgency, tips)

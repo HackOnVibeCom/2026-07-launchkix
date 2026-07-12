@@ -27,7 +27,9 @@ type RegeneratableSection =
   | "aso"
   | "socialCalendar"
   | "email"
-  | "communityPost";
+  | "communityPost"
+  | "landingPage"
+  | "pressBlurb";
 
 interface KitResultProps {
   kit: LaunchKit;
@@ -45,6 +47,8 @@ const TABS = [
   { value: "socialCalendar", label: "Social" },
   { value: "email", label: "Email" },
   { value: "communityPost", label: "Community" },
+  { value: "landingPage", label: "Landing Page" },
+  { value: "pressBlurb", label: "Press" },
 ] as const;
 
 function sectionLabel(section: RegeneratableSection) {
@@ -88,12 +92,22 @@ function kitSectionToText(kit: LaunchKit, section: RegeneratableSection): string
       const s = kit.communityPost;
       return `${s.title}\n\n${s.body}`;
     }
+    case "landingPage": {
+      const s = kit.landingPage;
+      if (!s) return "Landing page content not available";
+      return `Hero: ${s.hero}\n\nSubheadline: ${s.subhead}\n\nFeatures:\n${s.features.map((f, i) => `${i + 1}. ${f}`).join("\n")}\n\nCTA: ${s.cta}`;
+    }
+    case "pressBlurb": {
+      const s = kit.pressBlurb;
+      if (!s) return "Press blurb not available";
+      return `Summary:\n${s.summary}\n\nFounder Quote:\n"${s.founderQuote}"`;
+    }
   }
 }
 
 /** Copy all sections as markdown */
 function kitToMarkdown(kit: LaunchKit): string {
-  return `# Launch Kit
+  let md = `# Launch Kit
 
 ## App Store Listing
 **Title:** ${kit.appStore.title}
@@ -144,6 +158,38 @@ ${kit.email.body}
 ### ${kit.communityPost.title}
 ${kit.communityPost.body}
 `;
+
+  // Add optional sections
+  if (kit.landingPage) {
+    md += `
+---
+
+## Landing Page Copy
+**Hero:** ${kit.landingPage.hero}
+
+**Subheadline:** ${kit.landingPage.subhead}
+
+### Features
+${kit.landingPage.features.map((f, i) => `${i + 1}. ${f}`).join("\n")}
+
+**CTA:** ${kit.landingPage.cta}
+`;
+  }
+
+  if (kit.pressBlurb) {
+    md += `
+---
+
+## Press Blurb
+### Summary
+${kit.pressBlurb.summary}
+
+### Founder Quote
+"${kit.pressBlurb.founderQuote}"
+`;
+  }
+
+  return md;
 }
 
 /* ─────────────────── Sub-renderers ─────────────────── */
@@ -297,6 +343,50 @@ function CommunitySection({ data }: { data: CommunityPost }) {
   );
 }
 
+function LandingPageSection({ data }: { data: import("@/types/kit").LandingPageCopy }) {
+  return (
+    <div className={styles.sectionBody}>
+      <div className={styles.fieldItem}>
+        <span className={styles.fieldKey}>Hero Headline</span>
+        <p className={styles.communityTitle}>{data.hero}</p>
+      </div>
+      <div className={styles.fieldItem}>
+        <span className={styles.fieldKey}>Subheadline</span>
+        <p className={styles.body}>{data.subhead}</p>
+      </div>
+      <div className={styles.fieldItem}>
+        <span className={styles.fieldKey}>Key Features</span>
+        <ol className={styles.tipList}>
+          {data.features.map((feature, i) => (
+            <li key={i}>{feature}</li>
+          ))}
+        </ol>
+      </div>
+      <div className={styles.fieldItem}>
+        <span className={styles.fieldKey}>Call-to-Action</span>
+        <span className={styles.fieldVal}>{data.cta}</span>
+      </div>
+    </div>
+  );
+}
+
+function PressBlurbSection({ data }: { data: import("@/types/kit").PressBlurb }) {
+  return (
+    <div className={styles.sectionBody}>
+      <div className={styles.fieldItem}>
+        <span className={styles.fieldKey}>Press Summary (100 words)</span>
+        <p className={styles.body}>{data.summary}</p>
+      </div>
+      <div className={styles.fieldItem}>
+        <span className={styles.fieldKey}>Founder Quote Template</span>
+        <p className={styles.body} style={{ fontStyle: "italic", paddingLeft: "1rem", borderLeft: "2px solid var(--accent)" }}>
+          &ldquo;{data.founderQuote}&rdquo;
+        </p>
+      </div>
+    </div>
+  );
+}
+
 /* ─────────────────── Main component ─────────────────── */
 
 export function KitResult({ kit, brief, onRegenerate }: KitResultProps) {
@@ -323,6 +413,22 @@ export function KitResult({ kit, brief, onRegenerate }: KitResultProps) {
       );
     }
   }
+
+  function handleExportJSON() {
+    const jsonString = JSON.stringify(kit, null, 2);
+    const blob = new Blob([jsonString], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${brief.name.toLowerCase().replace(/\s+/g, "-")}-launch-kit.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    success("JSON exported", "Launch kit downloaded");
+  }
+
+  const sectionCount = 6 + (kit.landingPage ? 1 : 0) + (kit.pressBlurb ? 1 : 0);
 
   return (
     <Tabs.Root
@@ -408,6 +514,26 @@ export function KitResult({ kit, brief, onRegenerate }: KitResultProps) {
                 <CommunitySection data={kit.communityPost} />
               </SectionCard>
             )}
+
+            {activeTab === "landingPage" && kit.landingPage && (
+              <SectionCard
+                title="Landing Page Copy"
+                copyValue={kitSectionToText(kit, "landingPage")}
+                onRegenerate={() => handleRegenerate("landingPage")}
+              >
+                <LandingPageSection data={kit.landingPage} />
+              </SectionCard>
+            )}
+
+            {activeTab === "pressBlurb" && kit.pressBlurb && (
+              <SectionCard
+                title="Press & Media Blurb"
+                copyValue={kitSectionToText(kit, "pressBlurb")}
+                onRegenerate={() => handleRegenerate("pressBlurb")}
+              >
+                <PressBlurbSection data={kit.pressBlurb} />
+              </SectionCard>
+            )}
           </motion.div>
         </AnimatePresence>
       </div>
@@ -415,17 +541,26 @@ export function KitResult({ kit, brief, onRegenerate }: KitResultProps) {
       {/* Copy all footer */}
       <div className={styles.footer}>
         <span className={styles.footerMeta}>
-          {TABS.length} sections generated
+          {sectionCount} sections generated
         </span>
-        <CopyButton
-          value={kitToMarkdown(kit)}
-          successMessage="Full launch kit copied"
-          variant="secondary"
-          size="sm"
-          className={styles.copyAllBtn}
-        >
-          Copy all as Markdown
-        </CopyButton>
+        <div style={{ display: "flex", gap: "0.5rem" }}>
+          <CopyButton
+            value={kitToMarkdown(kit)}
+            successMessage="Full launch kit copied"
+            variant="secondary"
+            size="sm"
+            className={styles.copyAllBtn}
+          >
+            Copy as Markdown
+          </CopyButton>
+          <button
+            onClick={handleExportJSON}
+            className={styles.exportJsonBtn}
+            title="Download launch kit as JSON"
+          >
+            Export JSON
+          </button>
+        </div>
       </div>
     </Tabs.Root>
   );
