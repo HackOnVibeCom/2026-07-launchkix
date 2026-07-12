@@ -3,7 +3,7 @@
 .glassCard {
   position: relative;
   background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
+  border: var(--border-width) solid var(--glass-border);
   border-radius: var(--card-radius);
   box-shadow: var(--shadow-2);
   overflow: clip;
@@ -26,7 +26,7 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  padding: 1px;
+  padding: var(--border-width);
   pointer-events: none;
   background: linear-gradient(
     140deg,

@@ -94,6 +94,7 @@ export function AppIntakeForm({
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function togglePlatform(p: Platform) {
     setValues((prev) => {
@@ -107,11 +108,18 @@ export function AppIntakeForm({
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    
+    // Double-submit guard
+    if (isSubmitting || loading) return;
+    
     setTouched(true);
     const errs = validate(values);
     setErrors(errs);
     if (Object.keys(errs).length === 0) {
+      setIsSubmitting(true);
       onSubmit(values);
+      // Reset after a delay (parent controls loading state)
+      setTimeout(() => setIsSubmitting(false), 1000);
     }
   }
 
@@ -132,26 +140,40 @@ export function AppIntakeForm({
 
       <div className={styles.fields}>
         {/* App Name */}
-        <Input
-          label="App Name"
-          required
-          placeholder="e.g. FitTrack Pro"
-          value={values.name}
-          onChange={(e) => setValues((p) => ({ ...p, name: e.target.value }))}
-          error={fieldError("name")}
-          maxLength={100}
-        />
+        <div className={styles.fieldGroup}>
+          <Input
+            label="App Name"
+            required
+            placeholder="e.g. FitTrack Pro"
+            value={values.name}
+            onChange={(e) => setValues((p) => ({ ...p, name: e.target.value }))}
+            error={fieldError("name")}
+            maxLength={100}
+          />
+          {values.name.length > 30 && (
+            <p className={styles.charWarning} role="status">
+              ⚠️ App Store titles are limited to 30 chars (current: {values.name.length})
+            </p>
+          )}
+        </div>
 
         {/* Tagline */}
-        <Input
-          label="Tagline"
-          required
-          placeholder="e.g. Your AI fitness coach in your pocket"
-          value={values.tagline}
-          onChange={(e) => setValues((p) => ({ ...p, tagline: e.target.value }))}
-          error={fieldError("tagline")}
-          maxLength={200}
-        />
+        <div className={styles.fieldGroup}>
+          <Input
+            label="Tagline"
+            required
+            placeholder="e.g. Your AI fitness coach in your pocket"
+            value={values.tagline}
+            onChange={(e) => setValues((p) => ({ ...p, tagline: e.target.value }))}
+            error={fieldError("tagline")}
+            maxLength={200}
+          />
+          {values.tagline.length > 30 && (
+            <p className={styles.charWarning} role="status">
+              ⚠️ App Store subtitles are limited to 30 chars (current: {values.tagline.length})
+            </p>
+          )}
+        </div>
 
         {/* Description */}
         <Textarea
@@ -285,6 +307,7 @@ export function AppIntakeForm({
         variant="accent"
         size="lg"
         loading={loading}
+        disabled={isSubmitting || loading}
         className={styles.submitBtn}
       >
         {loading ? "Generating kit..." : "Generate Launch Kit"}

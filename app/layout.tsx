@@ -27,12 +27,43 @@ export const metadata: Metadata = {
     "indie hacker",
     "AI marketing",
   ],
+  authors: [{ name: "LauchKix" }],
+  creator: "LauchKix",
   openGraph: {
-    title: "LauchKix",
+    title: "LauchKix — Ship the app. We'll ship the launch.",
+    description:
+      "Turn your new mobile app into a full launch marketing kit in 60 seconds. AI-powered store listings, ASO keywords, social media calendar, and more.",
+    type: "website",
+    locale: "en_US",
+    siteName: "LauchKix",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "LauchKix — Ship the app. We'll ship the launch.",
     description:
       "Turn your new mobile app into a full launch marketing kit in 60 seconds.",
-    type: "website",
+    creator: "@lauchkix",
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+  },
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0d" },
+    { media: "(prefers-color-scheme: light)", color: "#fafafa" },
+  ],
 };
 
 export default function RootLayout({

@@ -64,6 +64,17 @@
   margin: 0;
 }
 
+.charWarning {
+  font-size: var(--fs-step--1);
+  color: var(--warning);
+  margin: 0;
+  padding: var(--space-2);
+  background: var(--warning-muted);
+  border-radius: var(--radius-sm);
+  border-left: 2px solid var(--warning);
+  line-height: var(--lh-snug);
+}
+
 /* ── Platform toggle ── */
 
 .platformRow {
