@@ -73,6 +73,19 @@ async function testGeneration() {
     console.log("🔍 Validating with Zod schema...\n");
     const parseResult = parseAIResponse(jsonContent);
 
+    if (!parseResult.success) {
+      console.log("❌ Validation FAILED\n");
+      const errors = (parseResult.error as any)?.issues ?? (parseResult.error as any)?.errors ?? [];
+      errors.forEach((err: any) => {
+        console.log(`  - ${Array.isArray(err.path) ? err.path.join(".") : err.path}: ${err.message}`);
+      });
+      // Also dump raw for debugging
+      console.log("\nRaw parse error:");
+      console.log(JSON.stringify(parseResult.error, null, 2).substring(0, 800));
+      console.log("\n❌ TEST FAILED - Schema validation errors\n");
+      return false;
+    }
+
     if (parseResult.success) {
       console.log("✅ Validation SUCCESS!\n");
       console.log("📊 Generated Launch Kit Structure:");
@@ -86,10 +99,10 @@ async function testGeneration() {
 
       // Check character limits
       const issues = [];
-      if (kit.appStore.title.length > 30) issues.push("App Store title too long");
-      if (kit.appStore.subtitle.length > 30) issues.push("Subtitle too long");
-      if (kit.appStore.promotionalText.length > 170) issues.push("Promo text too long");
-      if (kit.playStore.shortDescription.length > 80) issues.push("Play short desc too long");
+      if (kit.appStore.title.length > 30) issues.push(`App Store title too long (${kit.appStore.title.length}/30)`);
+      if (kit.appStore.subtitle.length > 30) issues.push(`Subtitle too long (${kit.appStore.subtitle.length}/30)`);
+      if (kit.appStore.promotionalText.length > 170) issues.push(`Promo text too long (${kit.appStore.promotionalText.length}/170)`);
+      if (kit.playStore.shortDescription.length > 80) issues.push(`Play short desc too long (${kit.playStore.shortDescription.length}/80)`);
 
       if (issues.length > 0) {
         console.log("⚠️  Character limit warnings:");
@@ -98,17 +111,11 @@ async function testGeneration() {
         console.log("✅ All character limits respected!");
       }
 
-      console.log("\n🎉 TEST PASSED - AI generation working correctly!\n");
+      console.log("\n🎉 TEST PASSED — AI generation working correctly!\n");
       return true;
-    } else {
-      console.log("❌ Validation FAILED\n");
-      console.log("Errors:");
-      parseResult.error.errors.forEach((err) => {
-        console.log(`  - ${err.path.join(".")}: ${err.message}`);
-      });
-      console.log("\n❌ TEST FAILED - Schema validation errors\n");
-      return false;
     }
+
+    return false;
   } catch (error) {
     console.log("❌ TEST FAILED - Exception thrown\n");
     console.error(error);

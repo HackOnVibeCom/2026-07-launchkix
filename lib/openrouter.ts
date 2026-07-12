@@ -45,9 +45,9 @@ class OpenRouterError extends Error {
 export class OpenRouterClient {
   private apiKey: string;
   private baseURL = "https://openrouter.ai/api/v1";
-  // Using Claude Haiku - fast, cost-effective, excellent structured output
-  private defaultModel = "anthropic/claude-3-haiku";
-  private fallbackModel = "anthropic/claude-3-5-sonnet";
+  // Gemini 2.5 Flash — best price/performance, strong structured output
+  private defaultModel = "google/gemini-2.5-flash";
+  private fallbackModel = "google/gemini-2.5-flash-preview-09-2025";
 
   constructor(apiKey?: string) {
     this.apiKey = apiKey || process.env.OPENROUTER_API_KEY || "";

@@ -38,16 +38,16 @@ export const SocialPostSchema = z.object({
 
 /** App Store listing schema */
 export const AppStoreListingSchema = z.object({
-  title: z.string().max(30, "App Store title max 30 chars"),
-  subtitle: z.string().max(30, "Subtitle max 30 chars"),
-  promotionalText: z.string().max(170, "Promotional text max 170 chars"),
+  title: z.string().transform((v) => v.slice(0, 30)),
+  subtitle: z.string().transform((v) => v.slice(0, 30)),
+  promotionalText: z.string().transform((v) => v.slice(0, 170)),
   description: z.string(),
   whatsNew: z.string(),
 });
 
 /** Play Store listing schema */
 export const PlayStoreListingSchema = z.object({
-  shortDescription: z.string().max(80, "Short description max 80 chars"),
+  shortDescription: z.string().transform((v) => v.slice(0, 80)),
   fullDescription: z.string(),
 });
 
