@@ -6,9 +6,9 @@ AI-powered launch marketing kits for mobile apps in under 60 seconds. Built for 
 
 ---
 
-## 🎬 Demo
+## 🎬 Demo & Live App
 
-**[Watch Demo Video](https://youtu.be/eDXk20nQhcA)** | **[Try Live Demo](https://lauchkix.vercel.app)**
+**[Watch Demo Video](https://youtu.be/eDXk20nQhcA)** | **[Try Live App](https://launchkix.vercel.app)**
 
 ---
 
