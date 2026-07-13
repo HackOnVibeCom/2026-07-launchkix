@@ -222,3 +222,5 @@ LauchKix bridges the gap between shipping an app and successfully launching it. 
 ---
 
 **Made with 💜 by the LauchKix Team** | *Ship the app. We'll ship the launch.* 🚀
+
+<!-- Deployment test - HackOnVibe 2026 -->
