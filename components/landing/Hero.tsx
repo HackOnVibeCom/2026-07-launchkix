@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Sparkles } from "lucide-react";
 import { fadeUp, staggerParent } from "@/lib/motion";
 import { Button, buttonClassName } from "@/components/ui/Button";
 import { Container } from "@/components/layout/Container";
@@ -18,11 +17,6 @@ export function Hero() {
           initial="hidden"
           animate="show"
         >
-          <motion.div className={styles.badge} variants={fadeUp}>
-            <Sparkles size={14} />
-            <span>AI-Powered Launch Marketing</span>
-          </motion.div>
-
           <motion.h1 className={styles.title} variants={fadeUp}>
             Ship the app.{" "}
             <span className={styles.accent}>We'll ship the launch.</span>
